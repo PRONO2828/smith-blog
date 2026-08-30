@@ -441,13 +441,18 @@ const COVER_BROWSER = svgURI(`<svg xmlns='http://www.w3.org/2000/svg' width='480
 /* ============================================================
    CONTENT OVERRIDES  (edits by Dr. Smith)
    ============================================================ */
+// Edit mode is unlocked by a ?edit=<secret> link. The secret is validated
+// server-side on publish, so its presence here only reveals the editing UI.
+const _params = new URLSearchParams(location.search);
+window.__editMode = _params.has('edit');
+window.__editToken = _params.get('edit') || '';
 const OVERRIDE_KEY = 'smith-content-v1';
 function loadOverrides(){
-  let embedded = {}, local = {};
+  let embedded = {};
   try { embedded = JSON.parse(document.getElementById('content-overrides').textContent || '{}'); } catch(e){}
-  try { local = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}'); } catch(e){}
-  return Object.assign({}, embedded, local);
+  return Object.assign({}, embedded, loadLocalOverrides());
 }
+function loadLocalOverrides(){ if(!window.__editMode) return {}; try { return JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}'); } catch(e){ return {}; } }
 let OVERRIDES = loadOverrides();
 function ov(id, fallback){ return OVERRIDES[id] != null ? OVERRIDES[id] : fallback; }
 function applyOverrides(){
@@ -596,25 +601,32 @@ function sendMsg(e){
 }
 
 /* ============================================================
-   INITIAL RENDER
+   INITIAL RENDER  +  load published content from the server
    ============================================================ */
 renderSchedule();
 renderPosts();
-applyOverrides();
+applyOverrides();               // shows embedded/local immediately
+(async function loadPublished(){
+  try {
+    const r = await fetch('content.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (r.ok) {
+      const server = await r.json();
+      OVERRIDES = Object.assign({}, server, loadLocalOverrides());
+      applyOverrides();
+    }
+  } catch(e){ /* offline / file:// — keep what we have */ }
+})();
 
 /* ============================================================
-   EDIT MODE  (unlocked by ?edit=<key>)
+   EDIT MODE  (unlocked by ?edit=<secret> link)
    ============================================================ */
-const EDIT_KEY = 'smith-2026-edit';
 (function initEdit(){
-  const params = new URLSearchParams(location.search);
-  if (params.get('edit') !== EDIT_KEY) return;
-  window.__editMode = true;
+  if (!window.__editMode) return;
 
   // Banner
   const banner = document.getElementById('editBanner');
   banner.classList.remove('hidden');
-  banner.innerHTML = '<b>✎ Edit mode.</b> Click any text to change it. Use the toolbar to add images or videos, then <b>Publish</b> to save a copy of your updated site. Your changes are saved in this browser as you type.';
+  banner.innerHTML = '<b>✎ Edit mode.</b> Click any text to change it. Use the toolbar to add images or videos, then <b>Save &amp; Publish</b> to make your changes go live for everyone. Edits are auto-saved in this browser as you type until you publish.';
 
   // Make editable
   let savedRange = null, activeEditable = null;
@@ -668,22 +680,36 @@ const EDIT_KEY = 'smith-2026-edit';
     insertHTML(html);
   }
 
-  // Publish = download updated index.html with edits baked in
-  function publish(){
-    document.getElementById('content-overrides').textContent = JSON.stringify(OVERRIDES);
-    const clone = document.documentElement.cloneNode(true);
-    clone.querySelectorAll('[contenteditable]').forEach(e => e.removeAttribute('contenteditable'));
-    clone.querySelectorAll('.editable-on').forEach(e => e.classList.remove('editable-on'));
-    const b = clone.querySelector('#editToolbar'); if (b) b.remove();
-    const bn = clone.querySelector('#editBanner'); if (bn) { bn.classList.add('hidden'); bn.innerHTML=''; }
-    const html = '<!DOCTYPE html>\n<html' + attrs(clone) + '>' + clone.innerHTML + '</html>';
-    const blob = new Blob([html], { type: 'text/html' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'index.html';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 3000);
-    setStatus('Downloaded ✓');
+  // Publish = save edits to the server → commits to GitHub → Vercel redeploys for everyone
+  async function publish(){
+    setStatus('Saving…');
+    try {
+      const r = await fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: window.__editToken, content: OVERRIDES })
+      });
+      let j = {}; try { j = await r.json(); } catch(e){}
+      if (r.ok && j.ok) {
+        try { localStorage.removeItem(OVERRIDE_KEY); } catch(e){}
+        setStatus('Published ✓');
+        showResult('✅ <b>Saved!</b> Your changes are publishing now — visitors will see them within about a minute. You can keep editing or close this tab.');
+      } else if (r.status === 401) {
+        setStatus('Key rejected');
+        showResult('⚠️ This link\'s edit key was not accepted. Please use the full private link exactly as it was given to you.');
+      } else if (r.status === 500 || r.status === 404) {
+        setStatus('Setup pending');
+        showResult('⚠️ The publishing backend isn\'t finished setting up yet. Your edits are saved in this browser in the meantime, so nothing is lost.');
+      } else {
+        setStatus('Error');
+        showResult('⚠️ Save failed (' + (j.error || ('HTTP ' + r.status)) + '). Your edits are safe in this browser.');
+      }
+    } catch(e){
+      setStatus('Error');
+      showResult('⚠️ Network problem while saving: ' + e.message + '. Your edits are safe in this browser.');
+    }
   }
-  function attrs(el){ return [...el.attributes].map(a => ` ${a.name}="${a.value}"`).join(''); }
+  function showResult(msg){ document.getElementById('editBanner').innerHTML = msg; }
 
   function discard(){
     if (!confirm('Discard the edits saved in this browser and reload the published version?')) return;
@@ -700,7 +726,7 @@ const EDIT_KEY = 'smith-2026-edit';
     <button class="btn btn-ghost btn-sm" id="etImg">🖼 Image</button>
     <button class="btn btn-ghost btn-sm" id="etVid">🎬 Video</button>
     <button class="btn btn-ghost btn-sm" id="etDiscard">↺ Reset</button>
-    <button class="btn btn-primary btn-sm" id="etPublish">⬇ Publish</button>`;
+    <button class="btn btn-primary btn-sm" id="etPublish">💾 Save &amp; Publish</button>`;
   document.body.appendChild(tb);
   document.getElementById('etImg').onclick = () => imgInput.click();
   document.getElementById('etVid').onclick = addVideo;
