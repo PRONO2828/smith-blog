@@ -211,12 +211,12 @@
       <span data-eid="brand-name">Dr. Alan Smith<small>Computer Science · live from Kyoto</small></span>
     </a>
     <nav class="nav-links">
-      <a href="#blog">Blog</a>
-      <a href="#live">Live Class</a>
-      <a href="#schedule">Schedule</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="#live" class="nav-cta">Join a class</a>
+      <a href="#blog" data-eid="nav-blog">Blog</a>
+      <a href="#live" data-eid="nav-live">Live Class</a>
+      <a href="#schedule" data-eid="nav-sched">Schedule</a>
+      <a href="#about" data-eid="nav-about">About</a>
+      <a href="#contact" data-eid="nav-contact">Contact</a>
+      <a href="#live" class="nav-cta" data-eid="nav-cta">Join a class</a>
     </nav>
     <button class="icon-btn" id="themeBtn" title="Toggle dark mode" aria-label="Toggle theme">🌙</button>
     <button class="icon-btn hamburger" id="menuBtn" aria-label="Menu">☰</button>
@@ -237,20 +237,20 @@
         right here on this site. Read the latest below, then come sit in on a class.
       </p>
       <div class="btns">
-        <a href="#blog" class="btn btn-primary">Read the latest posts</a>
-        <a href="#live" class="btn btn-ghost">▶ Enter the live classroom</a>
+        <a href="#blog" class="btn btn-primary" data-eid="hero-btn1">Read the latest posts</a>
+        <a href="#live" class="btn btn-ghost" data-eid="hero-btn2">▶ Enter the live classroom</a>
       </div>
       <div class="mini-stats">
-        <div><b>14</b><small>years teaching</small></div>
-        <div><b>3</b><small>weekly live seminars</small></div>
-        <div><b>UTC+9</b><small>current timezone</small></div>
+        <div data-eid="stat1"><b>14</b><small>years teaching</small></div>
+        <div data-eid="stat2"><b>3</b><small>weekly live seminars</small></div>
+        <div data-eid="stat3"><b>UTC+9</b><small>current timezone</small></div>
       </div>
     </div>
     <div class="hero-card">
-      <div class="cap"><span>Now teaching</span><span class="status-pill" style="padding:4px 10px;font-size:11px"><span class="dot"></span>online</span></div>
+      <div class="cap"><span data-eid="card-cap">Now teaching</span><span class="status-pill" style="padding:4px 10px;font-size:11px"><span class="dot"></span>online</span></div>
       <div class="portrait">
         <div class="initials">AS</div>
-        <pre class="mono">$ whoami
+        <pre class="mono" data-eid="card-terminal">$ whoami
 > dr_alan_smith
 $ location --now
 > Kyoto, JP (UTC+9)
@@ -300,9 +300,9 @@ $ status
           <p data-eid="live-welcome-text">Enter your name so classmates can recognise you, then join. You'll be able to raise your hand, share your screen, and chat with Dr. Smith and the class.</p>
           <div class="field-row">
             <input class="txt" id="nameInput" placeholder="Your name (e.g. Jordan L.)" maxlength="40" />
-            <button class="btn btn-primary" onclick="joinClass()">Join the class →</button>
+            <button class="btn btn-primary" onclick="joinClass()"><span data-eid="live-join-btn">Join the class →</span></button>
           </div>
-          <div class="note">🔒 Your camera and mic stay off until you turn them on inside the room. The connection is peer-to-peer via Jitsi's open-source servers.</div>
+          <div class="note" data-eid="live-note">🔒 Your camera and mic stay off until you turn them on inside the room. The connection is peer-to-peer via Jitsi's open-source servers.</div>
         </div>
       </div>
     </div>
@@ -361,10 +361,10 @@ $ status
     </div>
     <div class="contact-grid">
       <form class="contact" onsubmit="return sendMsg(event)">
-        <div><label for="cn">Name</label><input id="cn" required placeholder="Your name" /></div>
-        <div><label for="ce">Email</label><input id="ce" type="email" required placeholder="you@university.edu" /></div>
-        <div><label for="cm">Message</label><textarea id="cm" required placeholder="Question about a lecture, a reading, or scheduling…"></textarea></div>
-        <button class="btn btn-primary" type="submit">Send message</button>
+        <div><label for="cn" data-eid="contact-l-name">Name</label><input id="cn" required placeholder="Your name" /></div>
+        <div><label for="ce" data-eid="contact-l-email">Email</label><input id="ce" type="email" required placeholder="you@university.edu" /></div>
+        <div><label for="cm" data-eid="contact-l-msg">Message</label><textarea id="cm" required placeholder="Question about a lecture, a reading, or scheduling…"></textarea></div>
+        <button class="btn btn-primary" type="submit"><span data-eid="contact-send">Send message</span></button>
         <div class="form-msg hidden" id="formMsg">✓ Thanks — your message is ready to send. (Hook this form up to email or a form service to deliver it.)</div>
       </form>
       <div class="oh-card" data-eid="office-hours">
@@ -382,12 +382,12 @@ $ status
 <!-- ============ FOOTER ============ -->
 <footer class="site">
   <div class="wrap foot-inner">
-    <div>© <span id="year"></span> Dr. Alan Smith · Teaching online from Kyoto 🇯🇵</div>
+    <div>© <span id="year"></span> <span data-eid="footer-text">Dr. Alan Smith · Teaching online from Kyoto 🇯🇵</span></div>
     <div class="foot-links">
-      <a href="#blog">Blog</a>
-      <a href="#live">Live class</a>
-      <a href="#schedule">Schedule</a>
-      <a href="#contact">Contact</a>
+      <a href="#blog" data-eid="foot-blog">Blog</a>
+      <a href="#live" data-eid="foot-live">Live class</a>
+      <a href="#schedule" data-eid="foot-sched">Schedule</a>
+      <a href="#contact" data-eid="foot-contact">Contact</a>
     </div>
   </div>
 </footer>
@@ -626,7 +626,7 @@ applyOverrides();               // shows embedded/local immediately
   // Banner
   const banner = document.getElementById('editBanner');
   banner.classList.remove('hidden');
-  banner.innerHTML = '<b>✎ Edit mode.</b> Click any text to change it. Use the toolbar to add images or videos, then <b>Save &amp; Publish</b> to make your changes go live for everyone. Edits are auto-saved in this browser as you type until you publish.';
+  banner.innerHTML = '<b>✎ Edit mode.</b> Click <b>anything</b> — menu links, titles, buttons, stats, footer — to change it. Use <b>✏ Edit full article</b> on a post to edit its whole story. Add images/videos from the toolbar, then <b>Save &amp; Publish</b> to make it live for everyone.';
 
   // Make editable
   let savedRange = null, activeEditable = null;
@@ -640,6 +640,37 @@ applyOverrides();               // shows embedded/local immediately
     });
   }
   document.querySelectorAll('[data-eid]').forEach(enable);
+
+  // In edit mode, clicking a link/button should place the cursor to edit, not navigate.
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a[contenteditable="true"], [contenteditable="true"] a')) e.preventDefault();
+  }, true);
+
+  // Let Smith open and edit the FULL article body (not just the card excerpt).
+  document.querySelectorAll('#postList .post').forEach((card, i) => {
+    card.onclick = null; card.removeAttribute('onclick'); card.style.cursor = 'default';
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn btn-ghost btn-sm'; b.style.marginTop = '12px';
+    b.textContent = '✏ Edit full article';
+    b.onclick = () => openPostForEdit(i);
+    card.querySelector('.post-body').appendChild(b);
+  });
+  function openPostForEdit(i){
+    const p = POSTS[i];
+    document.getElementById('mCover').style.backgroundImage = "url('" + ov('post-'+i+'-cover-src', p.cover) + "')";
+    document.getElementById('mMeta').textContent = p.date + ' · ' + p.read;
+    const mt = document.getElementById('mTitle');
+    const mb = document.getElementById('mBody');
+    mt.innerHTML = ov('post-'+i+'-title', p.title); mt.setAttribute('data-eid', 'post-'+i+'-title');
+    mb.innerHTML = ov('post-'+i+'-body', p.body);   mb.setAttribute('data-eid', 'post-'+i+'-body');
+    [mt, mb].forEach(el => {
+      el.setAttribute('contenteditable','true'); el.classList.add('editable-on');
+      el.oninput = () => { OVERRIDES[el.getAttribute('data-eid')] = el.innerHTML; persistLocal(); flagSaving(); };
+      el.onfocus = () => { activeEditable = el; };
+    });
+    document.getElementById('modalBack').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 
   document.addEventListener('selectionchange', () => {
     const s = document.getSelection();
