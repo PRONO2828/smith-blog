@@ -4,221 +4,134 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dr. Alan Smith — Computer Science, Live from Kyoto</title>
-<meta name="description" content="The personal site and online classroom of Dr. Alan Smith, Senior Lecturer in Computer Science — teaching live from Kyoto during his year abroad." />
+<meta name="description" content="The personal blog and online classroom of Dr. Alan Smith, Senior Lecturer in Computer Science — teaching live from Kyoto during his year abroad." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<!-- Jitsi Meet: a real, free, open-source video-conferencing platform. Loaded from meet.jit.si.
-     Works with no accounts and no backend when you open this file in a browser. -->
+<!-- Jitsi Meet: a real, free, open-source video-conferencing platform (meet.jit.si). -->
 <script src="https://meet.jit.si/external_api.js"></script>
+<!-- Content overrides: edits published by Dr. Smith are baked in here on export. -->
+<script type="application/json" id="content-overrides">{}</script>
 <style>
   :root {
-    --bg: #f7f7fb;
-    --bg-soft: #ffffff;
-    --bg-elev: #ffffff;
-    --ink: #1a1c2b;
-    --ink-soft: #4a4d63;
-    --ink-faint: #7b7e94;
-    --line: #e6e6ef;
-    --brand: #4f46e5;
-    --brand-2: #7c3aed;
-    --brand-ink: #ffffff;
-    --accent: #ec6a4c;
-    --ok: #12a150;
-    --live: #e5484d;
+    --bg: #f7f7fb; --bg-soft: #ffffff; --bg-elev: #ffffff;
+    --ink: #1a1c2b; --ink-soft: #4a4d63; --ink-faint: #7b7e94;
+    --line: #e6e6ef; --brand: #4f46e5; --brand-2: #7c3aed; --accent: #ec6a4c;
+    --ok: #12a150; --live: #e5484d;
     --shadow: 0 1px 2px rgba(20,20,45,.05), 0 12px 32px -12px rgba(20,20,45,.18);
     --shadow-lg: 0 24px 60px -20px rgba(30,20,80,.35);
-    --radius: 18px;
-    --radius-sm: 12px;
-    --maxw: 1080px;
+    --radius: 18px; --radius-sm: 12px; --maxw: 1080px;
     --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
     --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   }
   [data-theme="dark"] {
-    --bg: #0d0e17;
-    --bg-soft: #14161f;
-    --bg-elev: #191b27;
-    --ink: #f0f1f7;
-    --ink-soft: #b9bcd0;
-    --ink-faint: #7f8298;
-    --line: #262838;
-    --brand: #7c7bff;
-    --brand-2: #a78bfa;
-    --accent: #ff8a6b;
+    --bg: #0d0e17; --bg-soft: #14161f; --bg-elev: #191b27;
+    --ink: #f0f1f7; --ink-soft: #b9bcd0; --ink-faint: #7f8298;
+    --line: #262a3d; --brand: #7c7bff; --brand-2: #a78bfa; --accent: #ff8a6b;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 40px -16px rgba(0,0,0,.6);
     --shadow-lg: 0 30px 70px -20px rgba(0,0,0,.75);
-    --line: #262a3d;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; scroll-padding-top: 84px; }
-  body {
-    margin: 0;
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: var(--brand); text-decoration: none; }
   a:hover { text-decoration: underline; }
   h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.1; letter-spacing: -.01em; }
   img { max-width: 100%; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
-  .eyebrow {
-    font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--brand); margin: 0 0 12px;
-  }
+  .eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); margin: 0 0 12px; }
 
-  /* ---------- Nav ---------- */
-  header.nav {
-    position: sticky; top: 0; z-index: 50;
-    backdrop-filter: saturate(160%) blur(12px);
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    border-bottom: 1px solid var(--line);
-  }
+  /* Nav */
+  header.nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(160%) blur(12px); background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line); }
   .nav-inner { display: flex; align-items: center; gap: 20px; height: 66px; }
   .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: -.01em; }
   .brand:hover { text-decoration: none; }
-  .mark {
-    width: 34px; height: 34px; border-radius: 10px; flex: none;
-    background: linear-gradient(135deg, var(--brand), var(--brand-2));
-    color: #fff; display: grid; place-items: center; font-family: var(--mono);
-    font-weight: 500; font-size: 15px; box-shadow: var(--shadow);
-  }
+  .mark { width: 34px; height: 34px; border-radius: 10px; flex: none; background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; display: grid; place-items: center; font-family: var(--mono); font-weight: 500; font-size: 15px; box-shadow: var(--shadow); }
   .brand small { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink-faint); letter-spacing: .02em; }
   .nav-links { margin-left: auto; display: flex; align-items: center; gap: 4px; }
-  .nav-links a {
-    color: var(--ink-soft); font-size: 14.5px; font-weight: 500; padding: 8px 12px; border-radius: 9px;
-  }
+  .nav-links a { color: var(--ink-soft); font-size: 14.5px; font-weight: 500; padding: 8px 12px; border-radius: 9px; }
   .nav-links a:hover { color: var(--ink); background: var(--bg-elev); text-decoration: none; }
-  .icon-btn {
-    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line);
-    background: var(--bg-elev); color: var(--ink); cursor: pointer; display: grid; place-items: center;
-    font-size: 17px; transition: .15s;
-  }
+  .icon-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); cursor: pointer; display: grid; place-items: center; font-size: 17px; transition: .15s; }
   .icon-btn:hover { border-color: var(--brand); color: var(--brand); }
-  .nav-cta {
-    background: var(--brand); color: #fff !important; padding: 9px 16px !important; border-radius: 10px !important;
-    font-weight: 600 !important; box-shadow: var(--shadow);
-  }
+  .nav-cta { background: var(--brand); color: #fff !important; padding: 9px 16px !important; border-radius: 10px !important; font-weight: 600 !important; box-shadow: var(--shadow); }
   .nav-cta:hover { background: var(--brand-2); text-decoration: none !important; }
   .hamburger { display: none; }
-  @media (max-width: 820px) {
-    .nav-links { display: none; }
-    .hamburger { display: grid; }
-  }
+  @media (max-width: 820px) { .nav-links { display: none; } .hamburger { display: grid; } }
 
-  /* ---------- Hero ---------- */
+  /* Hero */
   .hero { position: relative; overflow: hidden; padding: 74px 0 60px; }
-  .hero::before {
-    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(60% 60% at 85% -5%, color-mix(in srgb, var(--brand) 22%, transparent), transparent 70%),
-      radial-gradient(45% 55% at 5% 110%, color-mix(in srgb, var(--brand-2) 18%, transparent), transparent 70%);
-  }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(60% 60% at 85% -5%, color-mix(in srgb, var(--brand) 22%, transparent), transparent 70%), radial-gradient(45% 55% at 5% 110%, color-mix(in srgb, var(--brand-2) 18%, transparent), transparent 70%); }
   .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600;
-    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--bg-elev); color: var(--ink-soft); box-shadow: var(--shadow);
-  }
+  .status-pill { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink-soft); box-shadow: var(--shadow); }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 25%, transparent); }
   .hero h1 { font-size: clamp(38px, 6vw, 62px); margin: 20px 0 16px; }
   .hero h1 .grad { background: linear-gradient(120deg, var(--brand), var(--brand-2), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .lead { font-size: 18.5px; color: var(--ink-soft); max-width: 46ch; margin: 0 0 28px; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px;
-    padding: 13px 22px; border-radius: 12px; cursor: pointer; border: 1px solid transparent; transition: .16s;
-    font-family: var(--font);
-  }
+  .btn { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; padding: 13px 22px; border-radius: 12px; cursor: pointer; border: 1px solid transparent; transition: .16s; font-family: var(--font); }
   .btn-primary { background: var(--brand); color: #fff; box-shadow: var(--shadow); }
   .btn-primary:hover { background: var(--brand-2); text-decoration: none; transform: translateY(-1px); }
   .btn-ghost { background: var(--bg-elev); color: var(--ink); border-color: var(--line); }
   .btn-ghost:hover { border-color: var(--brand); color: var(--brand); text-decoration: none; }
-  .hero-card {
-    background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 22px; box-shadow: var(--shadow-lg);
-  }
+  .hero-card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-lg); }
   .hero-card .cap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .hero-card .cap span { font-size: 12.5px; font-weight: 600; color: var(--ink-faint); letter-spacing: .05em; text-transform: uppercase; }
-  .portrait {
-    aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; position: relative;
-    background: linear-gradient(160deg, var(--brand), var(--brand-2));
-    display: grid; place-items: center;
-  }
-  .portrait .mono {
-    font-family: var(--mono); color: rgba(255,255,255,.9); font-size: 13px; line-height: 1.9; text-align: left;
-    padding: 20px; width: 100%;
-  }
-  .portrait .initials {
-    position: absolute; inset: 0; display: grid; place-items: center;
-    font-family: var(--serif); font-size: 80px; color: rgba(255,255,255,.16); font-weight: 600;
-  }
+  .portrait { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; position: relative; background: linear-gradient(160deg, var(--brand), var(--brand-2)); display: grid; place-items: center; }
+  .portrait .mono { font-family: var(--mono); color: rgba(255,255,255,.9); font-size: 13px; line-height: 1.9; text-align: left; padding: 20px; width: 100%; }
+  .portrait .initials { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--serif); font-size: 80px; color: rgba(255,255,255,.16); font-weight: 600; }
   .mini-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 16px; }
   .mini-stats div { text-align: center; padding: 10px 6px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; }
   .mini-stats b { display: block; font-size: 20px; font-family: var(--serif); }
   .mini-stats small { color: var(--ink-faint); font-size: 11.5px; }
-  @media (max-width: 820px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 34px; }
-    .hero-card { order: -1; max-width: 380px; }
-  }
+  @media (max-width: 820px) { .hero-grid { grid-template-columns: 1fr; gap: 34px; } .hero-card { order: -1; max-width: 380px; } }
 
-  /* ---------- Sections ---------- */
+  /* Sections */
   section { padding: 66px 0; }
+  .band { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .sec-head { max-width: 62ch; margin-bottom: 34px; }
   .sec-head h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 12px; }
   .sec-head p { color: var(--ink-soft); font-size: 17px; margin: 0; }
 
-  /* ---------- Live classroom ---------- */
-  #live { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .live-shell {
-    background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
-    overflow: hidden; box-shadow: var(--shadow-lg);
-  }
+  /* Blog */
+  .posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .post { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: .18s; }
+  .post:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); }
+  .post-cover { height: 168px; background-size: cover; background-position: center; }
+  .post-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+  .post .meta { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 10px; }
+  .post h3 { font-size: 20px; margin: 0 0 10px; font-family: var(--serif); }
+  .post p { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 16px; flex: 1; }
+  .read { font-weight: 600; font-size: 14px; margin-top: auto; }
+
+  /* Live classroom */
+  .live-shell { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); }
   .live-bar { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
-  .live-badge {
-    display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; letter-spacing: .04em;
-    color: var(--live); text-transform: uppercase;
-  }
+  .live-badge { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; letter-spacing: .04em; color: var(--live); text-transform: uppercase; }
   .live-badge .dot { background: var(--live); box-shadow: 0 0 0 4px color-mix(in srgb, var(--live) 25%, transparent); animation: pulse 1.6s infinite; }
   @keyframes pulse { 50% { opacity: .35; } }
   .live-room-name { font-family: var(--mono); font-size: 13px; color: var(--ink-faint); }
   .live-bar .spacer { margin-left: auto; }
-  #jitsi-stage {
-    position: relative; min-height: 520px; background:
-      radial-gradient(40% 60% at 50% 0%, color-mix(in srgb, var(--brand) 14%, transparent), transparent 70%), var(--bg-soft);
-    display: grid; place-items: center;
-  }
+  #jitsi-stage { position: relative; min-height: 520px; background: radial-gradient(40% 60% at 50% 0%, color-mix(in srgb, var(--brand) 14%, transparent), transparent 70%), var(--bg-soft); display: grid; place-items: center; }
   #jitsi-stage iframe { width: 100% !important; height: 100% !important; border: 0; }
   .stage-empty { text-align: center; padding: 48px 24px; max-width: 460px; }
   .stage-empty .ic { font-size: 42px; margin-bottom: 10px; }
   .stage-empty h3 { font-size: 24px; margin: 0 0 8px; }
   .stage-empty p { color: var(--ink-soft); margin: 0 0 22px; }
   .field-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  input.txt {
-    font-family: var(--font); font-size: 15px; padding: 12px 15px; border-radius: 11px;
-    border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); min-width: 220px;
-  }
+  input.txt { font-family: var(--font); font-size: 15px; padding: 12px 15px; border-radius: 11px; border: 1px solid var(--line); background: var(--bg-elev); color: var(--ink); min-width: 220px; }
   input.txt:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent); }
   .btn-sm { padding: 9px 15px; font-size: 13.5px; }
   .btn-danger { background: var(--live); color: #fff; }
   .btn-danger:hover { filter: brightness(1.08); }
-  .note {
-    font-size: 12.5px; color: var(--ink-faint); margin-top: 16px; display: flex; gap: 7px; justify-content: center; align-items: flex-start;
-  }
+  .note { font-size: 12.5px; color: var(--ink-faint); margin-top: 16px; display: flex; gap: 7px; justify-content: center; align-items: flex-start; }
   .hidden { display: none !important; }
 
-  /* ---------- Schedule ---------- */
+  /* Schedule */
   .tz-info { font-size: 13.5px; color: var(--ink-faint); margin-bottom: 22px; }
   .tz-info b { color: var(--ink); }
   .class-list { display: grid; gap: 14px; }
-  .class-card {
-    display: grid; grid-template-columns: 88px 1fr auto; gap: 20px; align-items: center;
-    background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius-sm);
-    padding: 18px 20px; transition: .16s;
-  }
+  .class-card { display: grid; grid-template-columns: 88px 1fr auto; gap: 20px; align-items: center; background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 18px 20px; transition: .16s; }
   .class-card:hover { border-color: color-mix(in srgb, var(--brand) 45%, var(--line)); box-shadow: var(--shadow); }
   .cc-date { text-align: center; border-right: 1px solid var(--line); padding-right: 16px; }
   .cc-date b { display: block; font-family: var(--serif); font-size: 24px; line-height: 1; }
@@ -228,28 +141,9 @@
   .cc-time { font-family: var(--mono); font-size: 13px; color: var(--brand); margin-top: 6px; }
   .cc-time .local { color: var(--ink-faint); }
   .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--brand) 14%, transparent); color: var(--brand); margin-right: 6px; }
-  @media (max-width: 640px) {
-    .class-card { grid-template-columns: 1fr; gap: 12px; }
-    .cc-date { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 12px; display: flex; gap: 8px; align-items: baseline; justify-content: flex-start; }
-    .class-card .btn { justify-self: start; }
-  }
+  @media (max-width: 640px) { .class-card { grid-template-columns: 1fr; gap: 12px; } .cc-date { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 12px; display: flex; gap: 8px; align-items: baseline; justify-content: flex-start; } .class-card .btn { justify-self: start; } }
 
-  /* ---------- Blog ---------- */
-  .posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .post {
-    background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius);
-    overflow: hidden; display: flex; flex-direction: column; transition: .18s;
-  }
-  .post:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); }
-  .post-top { height: 8px; background: linear-gradient(90deg, var(--brand), var(--brand-2), var(--accent)); }
-  .post-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
-  .post .meta { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 10px; }
-  .post h3 { font-size: 20px; margin: 0 0 10px; font-family: var(--serif); }
-  .post p { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 16px; flex: 1; }
-  .read { font-weight: 600; font-size: 14px; margin-top: auto; }
-
-  /* ---------- About ---------- */
-  #about { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  /* About */
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: start; }
   .about-grid p { color: var(--ink-soft); font-size: 16px; }
   .facts { display: grid; gap: 12px; }
@@ -259,7 +153,7 @@
   .fact span { color: var(--ink-soft); font-size: 13.5px; }
   @media (max-width: 820px) { .about-grid { grid-template-columns: 1fr; gap: 28px; } }
 
-  /* ---------- Contact ---------- */
+  /* Contact */
   .contact-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: start; }
   .oh-card { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
   .oh-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
@@ -268,46 +162,58 @@
   .oh-row b { font-family: var(--mono); font-size: 13px; }
   form.contact { display: grid; gap: 14px; }
   form.contact label { font-size: 13px; font-weight: 600; color: var(--ink-soft); display: block; margin-bottom: 6px; }
-  form.contact input, form.contact textarea {
-    width: 100%; font-family: var(--font); font-size: 15px; padding: 12px 14px; border-radius: 11px;
-    border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink);
-  }
+  form.contact input, form.contact textarea { width: 100%; font-family: var(--font); font-size: 15px; padding: 12px 14px; border-radius: 11px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--ink); }
   form.contact input:focus, form.contact textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent); }
   form.contact textarea { min-height: 120px; resize: vertical; }
   .form-msg { font-size: 14px; color: var(--ok); font-weight: 600; }
   @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; gap: 26px; } }
 
-  /* ---------- Footer ---------- */
+  /* Footer */
   footer.site { border-top: 1px solid var(--line); padding: 40px 0; color: var(--ink-faint); font-size: 14px; }
   .foot-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
   .foot-links { display: flex; gap: 18px; }
   .foot-links a { color: var(--ink-soft); }
 
-  /* ---------- Modal ---------- */
+  /* Modal */
   .modal-back { position: fixed; inset: 0; background: rgba(10,10,25,.55); backdrop-filter: blur(4px); z-index: 100; display: none; place-items: center; padding: 20px; }
   .modal-back.open { display: grid; }
-  .modal { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); max-width: 620px; width: 100%; max-height: 86vh; overflow: auto; box-shadow: var(--shadow-lg); }
-  .modal-head { padding: 22px 24px 0; }
+  .modal { background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); max-width: 640px; width: 100%; max-height: 88vh; overflow: auto; box-shadow: var(--shadow-lg); }
+  .modal-cover { height: 200px; background-size: cover; background-position: center; }
+  .modal-head { padding: 22px 26px 0; }
   .modal-head .meta { font-size: 12.5px; color: var(--ink-faint); }
   .modal-head h2 { font-size: 27px; margin: 8px 0 0; }
-  .modal-body { padding: 16px 24px 26px; color: var(--ink-soft); font-size: 15.5px; }
+  .modal-body { padding: 16px 26px 26px; color: var(--ink-soft); font-size: 15.5px; }
   .modal-body p { margin: 0 0 14px; }
-  .modal-close { position: sticky; top: 0; float: right; margin: 12px 14px 0 0; }
+  .modal-close { position: sticky; top: 12px; float: right; margin: 12px 14px 0 0; z-index: 2; }
+
+  /* ===== Edit mode ===== */
+  [contenteditable="true"].editable-on { outline: 2px dashed color-mix(in srgb, var(--brand) 55%, transparent); outline-offset: 3px; border-radius: 4px; transition: background .12s; cursor: text; }
+  [contenteditable="true"].editable-on:hover { background: color-mix(in srgb, var(--brand) 8%, transparent); }
+  [contenteditable="true"].editable-on:focus { outline: 2px solid var(--brand); background: color-mix(in srgb, var(--brand) 6%, transparent); }
+  #editToolbar { position: fixed; z-index: 200; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--bg-elev); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-lg); max-width: calc(100vw - 24px); flex-wrap: wrap; }
+  #editToolbar .et-badge { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 12.5px; color: var(--brand); padding-right: 4px; }
+  #editToolbar .et-badge .dot { background: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 22%, transparent); }
+  #editToolbar .et-status { font-size: 12px; color: var(--ink-faint); min-width: 66px; }
+  #editBanner { background: linear-gradient(90deg, var(--brand), var(--brand-2)); color: #fff; text-align: center; font-size: 13.5px; font-weight: 500; padding: 9px 16px; }
+  #editBanner b { font-weight: 700; }
+  @media (max-width: 560px) { #editToolbar .et-status { display: none; } }
 </style>
 </head>
 <body data-theme="light">
+
+<div id="editBanner" class="hidden"></div>
 
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="wrap nav-inner">
     <a href="#top" class="brand">
       <span class="mark">&lt;/&gt;</span>
-      <span>Dr. Alan Smith<small>Computer Science · live from Kyoto</small></span>
+      <span data-eid="brand-name">Dr. Alan Smith<small>Computer Science · live from Kyoto</small></span>
     </a>
     <nav class="nav-links">
+      <a href="#blog">Blog</a>
       <a href="#live">Live Class</a>
       <a href="#schedule">Schedule</a>
-      <a href="#blog">Blog</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
       <a href="#live" class="nav-cta">Join a class</a>
@@ -323,16 +229,16 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="status-pill"><span class="dot"></span> Teaching remotely · Kyoto, Japan (JST)</span>
-      <h1>The classroom moved.<br /><span class="grad">The lecture didn't.</span></h1>
-      <p class="lead">
-        I'm Dr. Alan Smith — Senior Lecturer in Computer Science. For the coming academic year I'm on a private
-        lecturing residency abroad, so every class runs <strong>fully online and live</strong>, right here on this site.
-        Same seminars, same office hours, one browser tab away.
+      <span class="status-pill"><span class="dot"></span> <span data-eid="hero-status">Teaching remotely · Kyoto, Japan (JST)</span></span>
+      <h1 data-eid="hero-title">Notes from the road,<br /><span class="grad">lectures from anywhere.</span></h1>
+      <p class="lead" data-eid="hero-lead">
+        I'm Dr. Alan Smith — Senior Lecturer in Computer Science. This year I'm on a private lecturing
+        residency abroad, so I'm writing from Kyoto and teaching every class <strong>live and online</strong>,
+        right here on this site. Read the latest below, then come sit in on a class.
       </p>
       <div class="btns">
-        <a href="#live" class="btn btn-primary">▶ Enter the live classroom</a>
-        <a href="#schedule" class="btn btn-ghost">View this week's schedule</a>
+        <a href="#blog" class="btn btn-primary">Read the latest posts</a>
+        <a href="#live" class="btn btn-ghost">▶ Enter the live classroom</a>
       </div>
       <div class="mini-stats">
         <div><b>14</b><small>years teaching</small></div>
@@ -357,14 +263,25 @@ $ status
   </div>
 </section>
 
-<!-- ============ LIVE CLASSROOM ============ -->
-<section id="live">
+<!-- ============ BLOG (first) ============ -->
+<section id="blog">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Live classroom</p>
-      <h2>Class is in session — join the room</h2>
-      <p>A real video classroom running on Jitsi Meet: camera, microphone, screen sharing, live chat and a shared
-         whiteboard, all in your browser. No download, no account. Type your name and walk in.</p>
+      <p class="eyebrow" data-eid="blog-eyebrow">From the notebook</p>
+      <h2 data-eid="blog-title">Writing from the road</h2>
+      <p data-eid="blog-sub">Notes on teaching, computer science, and life as a lecturer 9,000 km from campus.</p>
+    </div>
+    <div class="posts" id="postList"><!-- filled by JS --></div>
+  </div>
+</section>
+
+<!-- ============ LIVE CLASSROOM ============ -->
+<section id="live" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-eid="live-eyebrow">Live classroom</p>
+      <h2 data-eid="live-title">Class is in session — join the room</h2>
+      <p data-eid="live-sub">A real video classroom running on Jitsi Meet: camera, microphone, screen sharing, live chat and a shared whiteboard, all in your browser. No download, no account. Type your name and walk in.</p>
     </div>
 
     <div class="live-shell">
@@ -379,9 +296,8 @@ $ status
       <div id="jitsi-stage">
         <div class="stage-empty" id="stageEmpty">
           <div class="ic">🎓</div>
-          <h3>Welcome to the lecture hall</h3>
-          <p>Enter your name so classmates can recognise you, then join. You'll be able to raise your hand,
-             share your screen, and chat with Dr. Smith and the class.</p>
+          <h3 data-eid="live-welcome-title">Welcome to the lecture hall</h3>
+          <p data-eid="live-welcome-text">Enter your name so classmates can recognise you, then join. You'll be able to raise your hand, share your screen, and chat with Dr. Smith and the class.</p>
           <div class="field-row">
             <input class="txt" id="nameInput" placeholder="Your name (e.g. Jordan L.)" maxlength="40" />
             <button class="btn btn-primary" onclick="joinClass()">Join the class →</button>
@@ -397,37 +313,24 @@ $ status
 <section id="schedule">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Weekly schedule</p>
-      <h2>Upcoming live classes &amp; materials</h2>
-      <p>All sessions are broadcast live in the classroom above. Times are set in Kyoto (JST) and converted
-         automatically to your local time.</p>
+      <p class="eyebrow" data-eid="sched-eyebrow">Weekly schedule</p>
+      <h2 data-eid="sched-title">Upcoming live classes &amp; materials</h2>
+      <p data-eid="sched-sub">All sessions are broadcast live in the classroom above. Times are set in Kyoto (JST) and converted automatically to your local time.</p>
     </div>
     <p class="tz-info">🕑 Detected timezone: <b id="tzName">—</b>. Kyoto is <b id="tzDiff">—</b> your time.</p>
     <div class="class-list" id="classList"><!-- filled by JS --></div>
   </div>
 </section>
 
-<!-- ============ BLOG ============ -->
-<section id="blog">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">From the notebook</p>
-      <h2>Writing from the road</h2>
-      <p>Notes on teaching, computer science, and life as a lecturer 9,000 km from campus.</p>
-    </div>
-    <div class="posts" id="postList"><!-- filled by JS --></div>
-  </div>
-</section>
-
 <!-- ============ ABOUT ============ -->
-<section id="about">
+<section id="about" class="band">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">About</p>
-      <h2>Dr. Alan Smith</h2>
+      <p class="eyebrow" data-eid="about-eyebrow">About</p>
+      <h2 data-eid="about-title">Dr. Alan Smith</h2>
     </div>
     <div class="about-grid">
-      <div>
+      <div data-eid="about-body">
         <p>I've spent the last fourteen years teaching computer science — algorithms, distributed systems, and the
            slightly unfashionable art of writing programs that other humans can read. My research sits where systems
            meet human-computer interaction: how we build software that scales without becoming impossible to reason about.</p>
@@ -439,10 +342,10 @@ $ status
            to resist rewriting my lecture notes one more time.</p>
       </div>
       <div class="facts">
-        <div class="fact"><span class="ic">🎓</span><div><b>Senior Lecturer, Computer Science</b><span>Systems &amp; human-centred software</span></div></div>
-        <div class="fact"><span class="ic">🌏</span><div><b>Currently in Kyoto, Japan</b><span>One-year private lecturing residency (UTC+9)</span></div></div>
-        <div class="fact"><span class="ic">💻</span><div><b>Teaching 100% online this year</b><span>Live seminars, recorded and archived</span></div></div>
-        <div class="fact"><span class="ic">🔬</span><div><b>Research interests</b><span>Distributed systems, HCI, programming languages</span></div></div>
+        <div class="fact"><span class="ic">🎓</span><div data-eid="fact-1"><b>Senior Lecturer, Computer Science</b><span>Systems &amp; human-centred software</span></div></div>
+        <div class="fact"><span class="ic">🌏</span><div data-eid="fact-2"><b>Currently in Kyoto, Japan</b><span>One-year private lecturing residency (UTC+9)</span></div></div>
+        <div class="fact"><span class="ic">💻</span><div data-eid="fact-3"><b>Teaching 100% online this year</b><span>Live seminars, recorded and archived</span></div></div>
+        <div class="fact"><span class="ic">🔬</span><div data-eid="fact-4"><b>Research interests</b><span>Distributed systems, HCI, programming languages</span></div></div>
       </div>
     </div>
   </div>
@@ -452,10 +355,9 @@ $ status
 <section id="contact">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Get in touch</p>
-      <h2>Contact &amp; office hours</h2>
-      <p>Different time zone, same open door. Drop by a live office-hour slot, or send a message and I'll reply
-         within a day.</p>
+      <p class="eyebrow" data-eid="contact-eyebrow">Get in touch</p>
+      <h2 data-eid="contact-title">Contact &amp; office hours</h2>
+      <p data-eid="contact-sub">Different time zone, same open door. Drop by a live office-hour slot, or send a message and I'll reply within a day.</p>
     </div>
     <div class="contact-grid">
       <form class="contact" onsubmit="return sendMsg(event)">
@@ -465,7 +367,7 @@ $ status
         <button class="btn btn-primary" type="submit">Send message</button>
         <div class="form-msg hidden" id="formMsg">✓ Thanks — your message is ready to send. (Hook this form up to email or a form service to deliver it.)</div>
       </form>
-      <div class="oh-card">
+      <div class="oh-card" data-eid="office-hours">
         <h3 style="margin:0 0 14px;font-size:20px">Weekly office hours <span style="font-size:13px;color:var(--ink-faint)">(Kyoto time)</span></h3>
         <div class="oh-row"><span>Tuesday</span><b>09:00 – 10:30 JST</b></div>
         <div class="oh-row"><span>Thursday</span><b>17:00 – 18:30 JST</b></div>
@@ -482,9 +384,9 @@ $ status
   <div class="wrap foot-inner">
     <div>© <span id="year"></span> Dr. Alan Smith · Teaching online from Kyoto 🇯🇵</div>
     <div class="foot-links">
+      <a href="#blog">Blog</a>
       <a href="#live">Live class</a>
       <a href="#schedule">Schedule</a>
-      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -494,6 +396,7 @@ $ status
 <div class="modal-back" id="modalBack" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="btn btn-ghost btn-sm modal-close" onclick="closeModal()">✕ Close</button>
+    <div class="modal-cover" id="mCover"></div>
     <div class="modal-head">
       <div class="meta" id="mMeta"></div>
       <h2 id="mTitle"></h2>
@@ -521,72 +424,73 @@ themeBtn.onclick = () => setTheme(document.body.getAttribute('data-theme') === '
 
 document.getElementById('menuBtn').onclick = () => {
   const links = document.querySelector('.nav-links');
-  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-  links.style.flexDirection = 'column';
-  links.style.position = 'absolute';
-  links.style.top = '66px'; links.style.right = '18px';
-  links.style.background = 'var(--bg-elev)';
-  links.style.border = '1px solid var(--line)';
-  links.style.padding = '10px'; links.style.borderRadius = '12px';
-  links.style.boxShadow = 'var(--shadow-lg)';
+  const open = links.style.display === 'flex';
+  links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:66px;right:18px;background:var(--bg-elev);border:1px solid var(--line);padding:10px;border-radius:12px;box-shadow:var(--shadow-lg)';
 };
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ============================================================
+   BLOG COVER ILLUSTRATIONS (inline SVG → always load)
+   ============================================================ */
+function svgURI(svg){ return 'data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g,'%27').replace(/"/g,'%22'); }
+const COVER_NET = svgURI(`<svg xmlns='http://www.w3.org/2000/svg' width='480' height='210' viewBox='0 0 480 210'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#4f46e5'/><stop offset='1' stop-color='#7c3aed'/></linearGradient></defs><rect width='480' height='210' fill='url(#g)'/><g stroke='rgba(255,255,255,.45)' stroke-width='1.5'><line x1='90' y1='60' x2='190' y2='120'/><line x1='190' y1='120' x2='300' y2='70'/><line x1='300' y1='70' x2='390' y2='140'/><line x1='90' y1='60' x2='300' y2='70'/><line x1='190' y1='120' x2='390' y2='140'/><line x1='90' y1='60' x2='150' y2='170'/><line x1='150' y1='170' x2='300' y2='70'/></g><g fill='#fff'><circle cx='90' cy='60' r='11'/><circle cx='190' cy='120' r='14'/><circle cx='300' cy='70' r='12'/><circle cx='390' cy='140' r='10'/><circle cx='150' cy='170' r='9' fill='#ffd7c7'/></g></svg>`);
+const COVER_CHAT = svgURI(`<svg xmlns='http://www.w3.org/2000/svg' width='480' height='210' viewBox='0 0 480 210'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#7c3aed'/><stop offset='1' stop-color='#ec6a4c'/></linearGradient></defs><rect width='480' height='210' fill='url(#g)'/><g><rect x='70' y='55' width='180' height='58' rx='16' fill='#fff'/><rect x='90' y='73' width='120' height='9' rx='4.5' fill='#e6e6ef'/><rect x='90' y='90' width='80' height='9' rx='4.5' fill='#e6e6ef'/><path d='M100 113 l0 22 22 -22 z' fill='#fff'/><rect x='230' y='108' width='170' height='58' rx='16' fill='rgba(255,255,255,.85)'/><rect x='250' y='126' width='110' height='9' rx='4.5' fill='#cfc6ef'/><rect x='250' y='143' width='70' height='9' rx='4.5' fill='#cfc6ef'/><path d='M380 166 l0 20 -20 -20 z' fill='rgba(255,255,255,.85)'/></g></svg>`);
+const COVER_BROWSER = svgURI(`<svg xmlns='http://www.w3.org/2000/svg' width='480' height='210' viewBox='0 0 480 210'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#4f46e5'/><stop offset='1' stop-color='#0ea5e9'/></linearGradient></defs><rect width='480' height='210' fill='url(#g)'/><rect x='96' y='40' width='288' height='134' rx='14' fill='#fff'/><rect x='96' y='40' width='288' height='30' rx='14' fill='#eef0f8'/><circle cx='116' cy='55' r='4.5' fill='#ec6a4c'/><circle cx='132' cy='55' r='4.5' fill='#f5c451'/><circle cx='148' cy='55' r='4.5' fill='#12a150'/><circle cx='240' cy='120' r='34' fill='#4f46e5'/><path d='M230 104 l24 16 -24 16 z' fill='#fff'/></svg>`);
+
+/* ============================================================
+   CONTENT OVERRIDES  (edits by Dr. Smith)
+   ============================================================ */
+const OVERRIDE_KEY = 'smith-content-v1';
+function loadOverrides(){
+  let embedded = {}, local = {};
+  try { embedded = JSON.parse(document.getElementById('content-overrides').textContent || '{}'); } catch(e){}
+  try { local = JSON.parse(localStorage.getItem(OVERRIDE_KEY) || '{}'); } catch(e){}
+  return Object.assign({}, embedded, local);
+}
+let OVERRIDES = loadOverrides();
+function ov(id, fallback){ return OVERRIDES[id] != null ? OVERRIDES[id] : fallback; }
+function applyOverrides(){
+  document.querySelectorAll('[data-eid]').forEach(el => {
+    const id = el.getAttribute('data-eid');
+    if (OVERRIDES[id] != null && el.innerHTML !== OVERRIDES[id]) el.innerHTML = OVERRIDES[id];
+  });
+}
+function persistLocal(){ try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify(OVERRIDES)); } catch(e){} }
+
+/* ============================================================
    LIVE CLASSROOM  (Jitsi Meet External API)
    ============================================================ */
-const ROOM = 'SmithCS-MainLectureHall-x7q2';   // shared room; unguessable suffix keeps it private-ish
-let jitsi = null;
-let audioMuted = true, videoMuted = true;
-
+const ROOM = 'SmithCS-MainLectureHall-x7q2';
+let jitsi = null, audioMuted = true, videoMuted = true;
 function joinClass(){
   const name = (document.getElementById('nameInput').value || 'Guest student').trim();
   const stage = document.getElementById('jitsi-stage');
   const empty = document.getElementById('stageEmpty');
-
   if (typeof JitsiMeetExternalAPI === 'undefined') {
     empty.innerHTML = '<div class="ic">⚠️</div><h3>The video service couldn\'t load</h3>' +
-      '<p>The live classroom needs a connection to Jitsi\'s servers (meet.jit.si). ' +
-      'If you\'re viewing this inside a preview pane, please <b>download this page and open it in your browser</b>, ' +
-      'then try again. A network/firewall block on meet.jit.si can also cause this.</p>';
+      '<p>The live classroom needs a connection to Jitsi\'s servers (meet.jit.si). A network or firewall block on meet.jit.si can cause this — try another network.</p>';
     return;
   }
-
   empty.classList.add('hidden');
   jitsi = new JitsiMeetExternalAPI('meet.jit.si', {
-    roomName: ROOM,
-    parentNode: stage,
-    userInfo: { displayName: name },
-    configOverwrite: {
-      startWithAudioMuted: true,
-      startWithVideoMuted: true,
-      prejoinPageEnabled: false,
-      disableDeepLinking: true
-    },
-    interfaceConfigOverwrite: {
-      MOBILE_APP_PROMO: false,
-      SHOW_JITSI_WATERMARK: false,
-      DEFAULT_BACKGROUND: '#0d0e17'
-    }
+    roomName: ROOM, parentNode: stage, userInfo: { displayName: name },
+    configOverwrite: { startWithAudioMuted: true, startWithVideoMuted: true, prejoinPageEnabled: false, disableDeepLinking: true },
+    interfaceConfigOverwrite: { MOBILE_APP_PROMO: false, SHOW_JITSI_WATERMARK: false, DEFAULT_BACKGROUND: '#0d0e17' }
   });
-
-  ['leaveBtn'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+  document.getElementById('leaveBtn').classList.remove('hidden');
   document.getElementById('micToggle').disabled = false;
   document.getElementById('camToggle').disabled = false;
-
   jitsi.addListener('audioMuteStatusChanged', e => { audioMuted = e.muted; syncBtns(); });
   jitsi.addListener('videoMuteStatusChanged', e => { videoMuted = e.muted; syncBtns(); });
   jitsi.addListener('readyToClose', leaveClass);
 }
-
 function syncBtns(){
   document.getElementById('micToggle').textContent = audioMuted ? '🔇 Unmute' : '🎙 Mute';
   document.getElementById('camToggle').textContent = videoMuted ? '📷 Start cam' : '📹 Stop cam';
 }
 function toggleAudio(){ if(jitsi) jitsi.executeCommand('toggleAudio'); }
 function toggleVideo(){ if(jitsi) jitsi.executeCommand('toggleVideo'); }
-
 function leaveClass(){
   if (jitsi) { jitsi.dispose(); jitsi = null; }
   document.getElementById('leaveBtn').classList.add('hidden');
@@ -597,48 +501,32 @@ function leaveClass(){
 document.getElementById('roomLabel').textContent = 'room: ' + ROOM;
 
 /* ============================================================
-   SCHEDULE  (times defined in JST → shown in viewer's local tz)
+   SCHEDULE
    ============================================================ */
-// Each class: JST day-of-week + HH:MM. We build the NEXT occurrence for display.
 const CLASSES = [
-  { title: 'Distributed Systems', sub: 'Consensus, replication & the CAP theorem', dow: 1, h: 10, m: 0, dur: 90, tags: ['Lecture','CS401'] },
-  { title: 'Algorithms Seminar',  sub: 'Live problem-solving: graphs & dynamic programming', dow: 3, h: 14, m: 0, dur: 90, tags: ['Seminar','CS210'] },
-  { title: 'Office Hours',        sub: 'Open room — bring questions, code, or coffee', dow: 2, h: 9, m: 0, dur: 90, tags: ['Drop-in'] },
-  { title: 'HCI & Software Design',sub: 'Building software humans can actually read', dow: 5, h: 11, m: 0, dur: 90, tags: ['Lecture','CS330'] },
+  { title: 'Distributed Systems', sub: 'Consensus, replication & the CAP theorem', dow: 1, h: 10, m: 0, tags: ['Lecture','CS401'] },
+  { title: 'Algorithms Seminar',  sub: 'Live problem-solving: graphs & dynamic programming', dow: 3, h: 14, m: 0, tags: ['Seminar','CS210'] },
+  { title: 'Office Hours',        sub: 'Open room — bring questions, code, or coffee', dow: 2, h: 9, m: 0, tags: ['Drop-in'] },
+  { title: 'HCI & Software Design',sub: 'Building software humans can actually read', dow: 5, h: 11, m: 0, tags: ['Lecture','CS330'] },
 ];
-const JST_OFFSET = 9 * 60; // minutes east of UTC
-
+const JST_OFFSET = 9 * 60;
 function nextOccurrenceUTC(dow, h, m){
-  // Interpret dow/h/m as Japan Standard Time, return a Date (UTC instant)
   const now = new Date();
   for (let add = 0; add < 14; add++){
-    // candidate date in UTC derived from JST wall-clock
     const base = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+add, h, m) - JST_OFFSET*60000);
-    // what JST weekday does this instant fall on?
     const jstDate = new Date(base.getTime() + JST_OFFSET*60000);
-    if (jstDate.getUTCDay() === dow && base.getTime() > now.getTime() - 60*60000){
-      return base;
-    }
+    if (jstDate.getUTCDay() === dow && base.getTime() > now.getTime() - 60*60000) return base;
   }
   return null;
 }
-
 function renderSchedule(){
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'your timezone';
   document.getElementById('tzName').textContent = tz;
-  // difference vs JST
-  const localOffset = -new Date().getTimezoneOffset(); // minutes east of UTC
-  const diff = (localOffset - JST_OFFSET) / 60;
-  document.getElementById('tzDiff').textContent =
-    diff === 0 ? 'the same as' : (diff > 0 ? `${diff}h ahead of` : `${Math.abs(diff)}h behind`);
-
-  const items = CLASSES.map(c => ({ ...c, when: nextOccurrenceUTC(c.dow, c.h, c.m) }))
-                       .filter(c => c.when)
-                       .sort((a,b) => a.when - b.when);
-
+  const diff = (-new Date().getTimezoneOffset() - JST_OFFSET) / 60;
+  document.getElementById('tzDiff').textContent = diff === 0 ? 'the same as' : (diff > 0 ? `${diff}h ahead of` : `${Math.abs(diff)}h behind`);
+  const items = CLASSES.map((c,i) => ({ ...c, i, when: nextOccurrenceUTC(c.dow, c.h, c.m) })).filter(c => c.when).sort((a,b) => a.when - b.when);
   const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const list = document.getElementById('classList');
-  list.innerHTML = items.map(c => {
+  document.getElementById('classList').innerHTML = items.map(c => {
     const localTime = c.when.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     const localDay  = c.when.toLocaleDateString([], {weekday:'short', month:'short', day:'numeric'});
     const jstStr = String(c.h).padStart(2,'0') + ':' + String(c.m).padStart(2,'0');
@@ -646,66 +534,55 @@ function renderSchedule(){
       <div class="cc-date"><b>${c.when.getDate()}</b><small>${wd[c.when.getDay()]}</small></div>
       <div class="cc-main">
         <div>${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-        <h3>${c.title}</h3>
-        <p>${c.sub}</p>
+        <h3 data-eid="class-${c.i}-title">${c.title}</h3>
+        <p data-eid="class-${c.i}-sub">${c.sub}</p>
         <div class="cc-time">🇯🇵 ${jstStr} JST · <span class="local">your time: ${localDay}, ${localTime}</span></div>
       </div>
       <a href="#live" class="btn btn-ghost btn-sm">Join room →</a>
     </div>`;
   }).join('');
 }
-renderSchedule();
 
 /* ============================================================
    BLOG
    ============================================================ */
 const POSTS = [
-  {
-    date: 'August 24, 2026', read: '5 min read', title: 'Teaching distributed systems from a distributed office',
+  { date: 'August 24, 2026', read: '5 min read', cover: COVER_NET,
+    title: 'Teaching distributed systems from a distributed office',
     excerpt: 'There is a certain irony in explaining eventual consistency from a timezone nine hours ahead of most of my students. Here is what a year of remote lecturing has taught me about latency — the human kind.',
-    body: `<p>There is a certain irony in explaining eventual consistency from a timezone nine hours ahead of most of my students. My "morning" lecture is their previous evening. The system we form — me, forty students, a chat box, and a video bridge — is, quite literally, a distributed system with partition tolerance as a lived experience.</p>
-    <p>What surprised me most is how the failure modes mirror the ones I teach. A student's connection drops mid-question (node failure). Two people talk over each other in chat (a write conflict). Someone rejoins and asks a question already answered ten minutes ago (a stale read). I've started using these moments as impromptu examples, and the lectures are better for it.</p>
-    <p>The lesson for anyone teaching remotely: design for partition. Record everything. Make the "source of truth" — notes, recordings, deadlines — asynchronous and durable, so the live session can be lossy without being catastrophic. Consistency is a property you engineer, not one you hope for.</p>`
-  },
-  {
-    date: 'August 10, 2026', read: '4 min read', title: 'The chat box made my quiet students louder',
+    body: `<p>There is a certain irony in explaining eventual consistency from a timezone nine hours ahead of most of my students. My "morning" lecture is their previous evening. The system we form — me, forty students, a chat box, and a video bridge — is, quite literally, a distributed system with partition tolerance as a lived experience.</p><p>What surprised me most is how the failure modes mirror the ones I teach. A student's connection drops mid-question (node failure). Two people talk over each other in chat (a write conflict). Someone rejoins and asks a question already answered ten minutes ago (a stale read). I've started using these moments as impromptu examples, and the lectures are better for it.</p><p>The lesson for anyone teaching remotely: design for partition. Record everything. Make the "source of truth" — notes, recordings, deadlines — asynchronous and durable, so the live session can be lossy without being catastrophic. Consistency is a property you engineer, not one you hope for.</p>` },
+  { date: 'August 10, 2026', read: '4 min read', cover: COVER_CHAT,
+    title: 'The chat box made my quiet students louder',
     excerpt: 'In a physical lecture hall, roughly six people ask all the questions. Online, that number tripled — and the questions got sharper. A short note on why the text channel changes who participates.',
-    body: `<p>In fourteen years of lecturing in physical rooms, I could name the six students who asked all the questions. Everyone else stayed silent, not for lack of curiosity but for the very human fear of being the one who slows the room down.</p>
-    <p>Online, the chat box quietly dismantled that fear. A student can drop a question without interrupting, without a hundred heads turning. I now get three times the questions, and they arrive sharper — people edit before they hit enter. I've taken to pausing every ten minutes to read the channel aloud and answer in a batch.</p>
-    <p>If you teach, don't treat the chat as a distraction to be managed. Treat it as the room's second, more democratic voice.</p>`
-  },
-  {
-    date: 'July 28, 2026', read: '3 min read', title: 'Setting up a lecture hall that lives in a browser tab',
+    body: `<p>In fourteen years of lecturing in physical rooms, I could name the six students who asked all the questions. Everyone else stayed silent, not for lack of curiosity but for the very human fear of being the one who slows the room down.</p><p>Online, the chat box quietly dismantled that fear. A student can drop a question without interrupting, without a hundred heads turning. I now get three times the questions, and they arrive sharper — people edit before they hit enter. I've taken to pausing every ten minutes to read the channel aloud and answer in a batch.</p><p>If you teach, don't treat the chat as a distraction to be managed. Treat it as the room's second, more democratic voice.</p>` },
+  { date: 'July 28, 2026', read: '3 min read', cover: COVER_BROWSER,
+    title: 'Setting up a lecture hall that lives in a browser tab',
     excerpt: 'No learning-management portal, no downloads, no forty-minute meeting caps. Here is the surprisingly small stack I use to run live classes for the whole year — and why I chose open source.',
-    body: `<p>When I realised I'd be teaching the entire year online, my first instinct was to reach for the usual institutional tools. Then I remembered why students hate them: logins, downloads, plugins, time limits, and a different link for every session.</p>
-    <p>Instead I run the live classes on <strong>Jitsi Meet</strong>, an open-source video platform that needs no account and no install. The classroom lives at one stable URL — this site. Students click, type a name, and they're in. Screen sharing and a shared whiteboard come built in. Recordings and notes live alongside as plain, durable files.</p>
-    <p>The whole stack is: one web page, one open-source video bridge, and a habit of writing things down. That's it. The best teaching infrastructure is the kind students never have to think about.</p>`
-  }
+    body: `<p>When I realised I'd be teaching the entire year online, my first instinct was to reach for the usual institutional tools. Then I remembered why students hate them: logins, downloads, plugins, time limits, and a different link for every session.</p><p>Instead I run the live classes on <strong>Jitsi Meet</strong>, an open-source video platform that needs no account and no install. The classroom lives at one stable URL — this site. Students click, type a name, and they're in. Screen sharing and a shared whiteboard come built in. Recordings and notes live alongside as plain, durable files.</p><p>The whole stack is: one web page, one open-source video bridge, and a habit of writing things down. That's it. The best teaching infrastructure is the kind students never have to think about.</p>` }
 ];
-
-document.getElementById('postList').innerHTML = POSTS.map((p,i) => `
-  <article class="post" onclick="openPost(${i})" style="cursor:pointer">
-    <div class="post-top"></div>
-    <div class="post-body">
-      <div class="meta">${p.date} · ${p.read}</div>
-      <h3>${p.title}</h3>
-      <p>${p.excerpt}</p>
-      <span class="read">Read the post →</span>
-    </div>
-  </article>`).join('');
-
+function renderPosts(){
+  document.getElementById('postList').innerHTML = POSTS.map((p,i) => `
+    <article class="post" onclick="openPost(${i})" style="cursor:pointer">
+      <div class="post-cover" data-eid="post-${i}-cover" style="background-image:url('${ov('post-'+i+'-cover-src', p.cover)}')"></div>
+      <div class="post-body">
+        <div class="meta" data-eid="post-${i}-meta">${p.date} · ${p.read}</div>
+        <h3 data-eid="post-${i}-title">${p.title}</h3>
+        <p data-eid="post-${i}-excerpt">${p.excerpt}</p>
+        <span class="read">Read the post →</span>
+      </div>
+    </article>`).join('');
+}
 function openPost(i){
+  if (window.__editMode) return; // in edit mode, clicks are for editing, not opening
   const p = POSTS[i];
+  document.getElementById('mCover').style.backgroundImage = `url('${ov('post-'+i+'-cover-src', p.cover)}')`;
   document.getElementById('mMeta').textContent = p.date + ' · ' + p.read;
-  document.getElementById('mTitle').textContent = p.title;
-  document.getElementById('mBody').innerHTML = p.body;
+  document.getElementById('mTitle').innerHTML = ov('post-'+i+'-title', p.title);
+  document.getElementById('mBody').innerHTML = ov('post-'+i+'-body', p.body);
   document.getElementById('modalBack').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-function closeModal(){
-  document.getElementById('modalBack').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function closeModal(){ document.getElementById('modalBack').classList.remove('open'); document.body.style.overflow = ''; }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
 /* ============================================================
@@ -717,6 +594,123 @@ function sendMsg(e){
   e.target.querySelector('button').textContent = '✓ Ready to send';
   return false;
 }
+
+/* ============================================================
+   INITIAL RENDER
+   ============================================================ */
+renderSchedule();
+renderPosts();
+applyOverrides();
+
+/* ============================================================
+   EDIT MODE  (unlocked by ?edit=<key>)
+   ============================================================ */
+const EDIT_KEY = 'smith-2026-edit';
+(function initEdit(){
+  const params = new URLSearchParams(location.search);
+  if (params.get('edit') !== EDIT_KEY) return;
+  window.__editMode = true;
+
+  // Banner
+  const banner = document.getElementById('editBanner');
+  banner.classList.remove('hidden');
+  banner.innerHTML = '<b>✎ Edit mode.</b> Click any text to change it. Use the toolbar to add images or videos, then <b>Publish</b> to save a copy of your updated site. Your changes are saved in this browser as you type.';
+
+  // Make editable
+  let savedRange = null, activeEditable = null;
+  function enable(el){
+    el.setAttribute('contenteditable','true');
+    el.classList.add('editable-on');
+    el.addEventListener('focus', () => activeEditable = el);
+    el.addEventListener('input', () => {
+      OVERRIDES[el.getAttribute('data-eid')] = el.innerHTML;
+      persistLocal(); flagSaving();
+    });
+  }
+  document.querySelectorAll('[data-eid]').forEach(enable);
+
+  document.addEventListener('selectionchange', () => {
+    const s = document.getSelection();
+    if (!s.rangeCount) return;
+    const r = s.getRangeAt(0);
+    let n = r.commonAncestorContainer;
+    n = n.nodeType === 3 ? n.parentElement : n;
+    if (n && n.closest('[contenteditable="true"]')) { savedRange = r.cloneRange(); activeEditable = n.closest('[contenteditable="true"]'); }
+  });
+
+  function insertHTML(html){
+    if (!savedRange || !activeEditable){ alert('First click into the text where you want to add the image or video.'); return; }
+    const sel = document.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange);
+    document.execCommand('insertHTML', false, html);
+    activeEditable.dispatchEvent(new Event('input'));
+  }
+
+  // Hidden file input for images
+  const imgInput = document.createElement('input');
+  imgInput.type = 'file'; imgInput.accept = 'image/*'; imgInput.style.display = 'none';
+  document.body.appendChild(imgInput);
+  imgInput.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    if (f.size > 4 * 1024 * 1024) { alert('That image is larger than 4 MB. Please choose a smaller one so the site stays fast.'); e.target.value=''; return; }
+    const rd = new FileReader();
+    rd.onload = () => insertHTML(`<img src="${rd.result}" alt="" style="max-width:100%;border-radius:12px;margin:14px 0;display:block" />`);
+    rd.readAsDataURL(f); e.target.value = '';
+  };
+  function addVideo(){
+    const url = prompt('Paste a video link (YouTube, Vimeo, or a direct .mp4 URL):');
+    if (!url) return;
+    const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+    const vim = url.match(/vimeo\.com\/(\d+)/);
+    let html;
+    if (yt) html = `<div style="position:relative;padding-bottom:56.25%;height:0;margin:14px 0;border-radius:12px;overflow:hidden"><iframe src="https://www.youtube.com/embed/${yt[1]}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen loading="lazy"></iframe></div>`;
+    else if (vim) html = `<div style="position:relative;padding-bottom:56.25%;height:0;margin:14px 0;border-radius:12px;overflow:hidden"><iframe src="https://player.vimeo.com/video/${vim[1]}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen loading="lazy"></iframe></div>`;
+    else html = `<video controls src="${url}" style="max-width:100%;border-radius:12px;margin:14px 0;display:block"></video>`;
+    insertHTML(html);
+  }
+
+  // Publish = download updated index.html with edits baked in
+  function publish(){
+    document.getElementById('content-overrides').textContent = JSON.stringify(OVERRIDES);
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(e => e.removeAttribute('contenteditable'));
+    clone.querySelectorAll('.editable-on').forEach(e => e.classList.remove('editable-on'));
+    const b = clone.querySelector('#editToolbar'); if (b) b.remove();
+    const bn = clone.querySelector('#editBanner'); if (bn) { bn.classList.add('hidden'); bn.innerHTML=''; }
+    const html = '<!DOCTYPE html>\n<html' + attrs(clone) + '>' + clone.innerHTML + '</html>';
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'index.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+    setStatus('Downloaded ✓');
+  }
+  function attrs(el){ return [...el.attributes].map(a => ` ${a.name}="${a.value}"`).join(''); }
+
+  function discard(){
+    if (!confirm('Discard the edits saved in this browser and reload the published version?')) return;
+    try { localStorage.removeItem(OVERRIDE_KEY); } catch(e){}
+    location.reload();
+  }
+
+  // Toolbar
+  const tb = document.createElement('div');
+  tb.id = 'editToolbar';
+  tb.innerHTML = `
+    <span class="et-badge"><span class="dot"></span> Edit</span>
+    <span class="et-status" id="etStatus">Ready</span>
+    <button class="btn btn-ghost btn-sm" id="etImg">🖼 Image</button>
+    <button class="btn btn-ghost btn-sm" id="etVid">🎬 Video</button>
+    <button class="btn btn-ghost btn-sm" id="etDiscard">↺ Reset</button>
+    <button class="btn btn-primary btn-sm" id="etPublish">⬇ Publish</button>`;
+  document.body.appendChild(tb);
+  document.getElementById('etImg').onclick = () => imgInput.click();
+  document.getElementById('etVid').onclick = addVideo;
+  document.getElementById('etDiscard').onclick = discard;
+  document.getElementById('etPublish').onclick = publish;
+
+  let savingTimer = null;
+  function setStatus(t){ document.getElementById('etStatus').textContent = t; }
+  function flagSaving(){ setStatus('Saved to browser'); clearTimeout(savingTimer); savingTimer = setTimeout(() => setStatus('Ready'), 1400); }
+})();
 </script>
 </body>
 </html>
